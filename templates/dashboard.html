@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-3">Dashboard</h2>
+
+<!-- Buttons -->
+<a href="/logout/" class="btn btn-danger">Logout</a>
+<a href="/add/" class="btn btn-primary">Add Expense</a>
+<a href="/export/" class="btn btn-success">Export CSV</a>
+<br><br>
+
+<h4>Total Spending: ₹{{ total }}</h4>
+
+<!-- Chart -->
+<canvas id="expenseChart" width="400" height="200"></canvas>
+
+<script>
+    const data = {
+        labels: [{% for key in categories %}'{{ key }}',{% endfor %}],
+        datasets: [{
+            label: 'Expenses',
+            data: [{% for value in categories.values %}{{ value }},{% endfor %}],
+        }]
+    };
+
+    const config = {
+        type: 'pie',
+        data: data,
+    };
+
+    new Chart(
+        document.getElementById('expenseChart'),
+        config
+    );
+</script>
+
+<br><br>
+
+<h4>Your Expenses</h4>
+
+<!-- Styled Table -->
+<table class="table table-bordered table-striped">
+    <tr>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Description</th>
+    </tr>
+
+    {% for expense in expenses %}
+    <tr>
+        <td>{{ expense.amount }}</td>
+        <td>{{ expense.category }}</td>
+        <td>{{ expense.date }}</td>
+        <td>{{ expense.description }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

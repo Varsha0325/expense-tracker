@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add Expense</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="number" name="amount" placeholder="Amount"><br><br>
+
+    <select name="category">
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Bills</option>
+        <option>Other</option>
+    </select><br><br>
+
+    <input type="date" name="date"><br><br>
+
+    <input type="text" name="description" placeholder="Description"><br><br>
+
+    <button type="submit">Add</button>
+</form>
+
+<a href="/dashboard/">Back to Dashboard</a>
+
+{% endblock %}
